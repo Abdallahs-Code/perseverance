@@ -1,18 +1,24 @@
-#include "gpio.h"
-#include "pin_config.h"
+#include "../lib/HAL_ULTRASONIC/ultrasonic.h"
 
 int main(void)
 {
-    GPIO_SetPinDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
+    ultrasonicBegin();
 
     while(1)
     {
-        GPIO_WritePin(LED_PORT, LED_PIN, GPIO_HIGH);
+        float distance = ultrasonicReadDistanceCm();
 
-        for(volatile long i = 0; i < 50000; i++);
-
-        GPIO_WritePin(LED_PORT, LED_PIN, GPIO_LOW);
+        if (distance < 0)
+        {
+            /* Timeout — no object detected */
+        }
+        else
+        {
+            /* Distance is in: distance (cm) */
+        }
 
         for(volatile long i = 0; i < 50000; i++);
     }
+
+    return 0;
 }
