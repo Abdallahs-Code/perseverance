@@ -1,18 +1,18 @@
-#include <Arduino.h>
+#include "gpio.h"
+#include "pin_config.h"
 
-// put function declarations here:
-int myFunction(int, int);
+int main(void)
+{
+    GPIO_SetPinDirection(LED_PORT, LED_PIN, GPIO_OUTPUT);
 
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
-}
+    while(1)
+    {
+        GPIO_WritePin(LED_PORT, LED_PIN, GPIO_HIGH);
 
-void loop() {
-  // put your main code here, to run repeatedly:
-}
+        for(volatile long i = 0; i < 50000; i++);
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+        GPIO_WritePin(LED_PORT, LED_PIN, GPIO_LOW);
+
+        for(volatile long i = 0; i < 50000; i++);
+    }
 }
