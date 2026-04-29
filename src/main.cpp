@@ -1,24 +1,18 @@
-#include "../lib/HAL_ULTRASONIC/ultrasonic.h"
+#include <Arduino.h>
 
-int main(void)
-{
-    ultrasonicBegin();
+// put function declarations here:
+int myFunction(int, int);
 
-    while(1)
-    {
-        float distance = ultrasonicReadDistanceCm();
+void setup() {
+  // put your setup code here, to run once:
+  int result = myFunction(2, 3);
+}
 
-        if (distance < 0)
-        {
-            /* Timeout — no object detected */
-        }
-        else
-        {
-            /* Distance is in: distance (cm) */
-        }
+void loop() {
+  // put your main code here, to run repeatedly:
+}
 
-        for(volatile long i = 0; i < 50000; i++);
-    }
-
-    return 0;
+// put function definitions here:
+int myFunction(int x, int y) {
+  return x + y;
 }
