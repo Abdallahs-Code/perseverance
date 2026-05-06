@@ -19,11 +19,11 @@
 
 /* ---------------------------------------------------------------
  * TRIG pins — any free GPIO output pins
- *   Sensor 1 TRIG: Port A, Pin 0  (Arduino Mega pin 22)
- *   Sensor 2 TRIG: Port A, Pin 1  (Arduino Mega pin 23)
- *   Sensor 3 TRIG: Port A, Pin 2  (Arduino Mega pin 24)
+ *   Sensor 1 TRIG: Port F, Pin 0  (Arduino Mega pin A0 / pin 54)
+ *   Sensor 2 TRIG: Port A, Pin 1  (Arduino Mega pin 23) - unused
+ *   Sensor 3 TRIG: Port A, Pin 2  (Arduino Mega pin 24) - unused
  * --------------------------------------------------------------- */
-#define TRIG1_PORT   PORT_A
+#define TRIG1_PORT   PORT_F
 #define TRIG1_PIN    0
 
 #define TRIG2_PORT   PORT_A
@@ -34,24 +34,24 @@
 
 /* ---------------------------------------------------------------
  * ECHO pins — MUST be external interrupt pins on ATmega2560
- *   Sensor 1 ECHO: Arduino Mega pin 2  → INT0 → Port D, Pin 0
+ *   Sensor 1 ECHO: Arduino Mega pin 21 → INT0 → Port D, Pin 0
  *   Sensor 2 ECHO: Arduino Mega pin 3  → INT1 → Port D, Pin 1
  *   Sensor 3 ECHO: Arduino Mega pin 21 → INT2 → Port D, Pin 2
  * --------------------------------------------------------------- */
 #define ECHO1_PORT   PORT_D
-#define ECHO1_PIN    0       /* INT0 */
+#define ECHO1_PIN    0   /* INT0 */
 
 #define ECHO2_PORT   PORT_D
-#define ECHO2_PIN    1       /* INT1 */
+#define ECHO2_PIN    1   /* INT1 */
 
 #define ECHO3_PORT   PORT_D
-#define ECHO3_PIN    2       /* INT2 */
+#define ECHO3_PIN    2   /* INT2 */
 
 /* ---------------------------------------------------------------
  * Timer3 configuration (16-bit, ATmega2560)
  *   Prescaler = 8  →  tick = 0.5 µs  →  overflow every ~32 ms
  * --------------------------------------------------------------- */
-#define TIMER3_PRESCALER_BITS    (1 << CS31)    /* prescaler = 8  */
+#define TIMER3_PRESCALER_BITS    (1 << CS31)   /* prescaler = 8 */
 #define TICKS_PER_US             2UL            /* 2 ticks = 1 µs */
 
 /* ---------------------------------------------------------------
