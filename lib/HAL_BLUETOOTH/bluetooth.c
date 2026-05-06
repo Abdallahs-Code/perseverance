@@ -1,4 +1,5 @@
 #include "bluetooth.h"
+#include "bit_math.h"
 #include <avr/io.h>
 
 void Bluetooth_Init(uint32_t baudRate)
@@ -12,7 +13,8 @@ void Bluetooth_Init(uint32_t baudRate)
 
   // USART Control and Status Register 0 B
   // ENABLE TX1 and RX1
-  UCSR1B = (1 << TXEN1) | (1 << RXEN1);
+  SET_BIT(UCSR1B, TXEN1);
+  SET_BIT(UCSR1B, RXEN1);
 
   // USART Control and Status Register 0 C
   // 8 bits data one stop bit
@@ -23,7 +25,8 @@ void Bluetooth_Init(uint32_t baudRate)
   // 0       1       1         8 bits ← most common
   // 1       1       1         9 bits
   // USBS1 = 0 meaning stop bit = 0
-  UCSR1C = (1 << UCSZ10) | (1 << UCSZ11);
+  SET_BIT(UCSR1C, UCSZ10);
+  SET_BIT(UCSR1C, UCSZ11);
 
 }
 
@@ -40,7 +43,7 @@ void Bluetooth_Send(const char *message)
     // UDREn : USART Data Register Empty
     // This bit = 1 when The transmit buffer is ready to accept new data
     // UCSRnA & (1<<UDREn) This checks: Is UDRE bit = 1?
-    while (!(UCSR1A & (1 << UDRE1)));
+     while (!GET_BIT(UCSR1A, UDRE1));
     
     // put data into buffer
     UDR1 = *prefix++;
@@ -49,7 +52,7 @@ void Bluetooth_Send(const char *message)
 
   while (*message)
   {
-    while (!(UCSR1A & (1 << UDRE1)));
+    while (!GET_BIT(UCSR1A, UDRE1));
     UDR1 = *message++;
   }
 }
