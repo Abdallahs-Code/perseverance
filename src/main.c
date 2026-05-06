@@ -170,4 +170,6 @@ int main(void)
             Car_Stop();
         }
     }
+
+    return 0;
 }
