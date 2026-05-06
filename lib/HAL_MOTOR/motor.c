@@ -10,18 +10,6 @@ Assumptions:
 - PWM: OC1A = Left speed, OC1B = Right speed
 */
 
-#define IN1_PORT PORT_D
-#define IN1_PIN  2
-
-#define IN2_PORT PORT_D
-#define IN2_PIN  3
-
-#define IN3_PORT PORT_D
-#define IN3_PIN  4
-
-#define IN4_PORT PORT_D
-#define IN4_PIN  7
-
 void Motor_Init(void)
 {
     // Direction pins
