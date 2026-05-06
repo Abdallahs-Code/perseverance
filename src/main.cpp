@@ -1,18 +1,16 @@
-#include <Arduino.h>
+#include "gpio.h"
+#include <util/delay.h>
 
-// put function declarations here:
-int myFunction(int, int);
+int main(void)
+{
+    GPIO_SetPinDirection(PORT_E, 3, GPIO_OUTPUT);
 
-void setup() {
-  // put your setup code here, to run once:
-  int result = myFunction(2, 3);
-}
+    while (1)
+    {
+        GPIO_WritePin(PORT_E, 3, GPIO_HIGH);
+        for(volatile long i = 0; i < 5000000; i++);
 
-void loop() {
-  // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+        GPIO_WritePin(PORT_E, 3, GPIO_LOW);
+        for(volatile long i = 0; i < 5000000; i++);
+    }
 }
