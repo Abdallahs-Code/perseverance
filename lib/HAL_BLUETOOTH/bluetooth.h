@@ -1,9 +1,9 @@
 #ifndef BLUETOOTH_H
 #define BLUETOOTH_H
 
-#include <Arduino.h>
+#include <stdint.h>
 
-void Bluetooth_Init(long baudRate);
-void Bluetooth_Send(String message);
+void Bluetooth_Init(uint32_t baudRate);
+void Bluetooth_Send(const char* message);
 
 #endif
