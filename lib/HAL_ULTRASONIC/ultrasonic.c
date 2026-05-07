@@ -3,7 +3,7 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#define TIMEOUT_TICKS  80000U    // 40ms @ prescaler 8, 16MHz
+#define TIMEOUT_TICKS  60000U    // 40ms @ prescaler 8, 16MHz
 
 // Sensor instances
 UltrasonicSensor sensor_front;
