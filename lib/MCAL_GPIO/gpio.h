@@ -17,16 +17,11 @@
 #define GPIO_HIGH 1
 #define GPIO_LOW  0
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 void GPIO_SetPinDirection(uint8 port, uint8 pin, uint8 direction);
 void GPIO_WritePin(uint8 port, uint8 pin, uint8 value);
 uint8 GPIO_ReadPin(uint8 port, uint8 pin);
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif
