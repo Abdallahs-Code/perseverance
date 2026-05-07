@@ -1,15 +1,12 @@
-#include "gpio.h"
-#include "pin_config.h"
-#include "bluetooth.h"
+#include "motor.h"
+#include <util/delay.h>
 
 int main(void)
 {
-    Bluetooth_Init(9600);
+    Motor_Init();
 
-    while(1)
+    while (1)
     {
-        Bluetooth_Send("Hello From UART");
 
-        for(volatile long i = 0; i < 50000; i++);
     }
 }
