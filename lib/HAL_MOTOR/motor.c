@@ -44,14 +44,14 @@ void Motor_LeftStop(void)
 /* RIGHT MOTOR */
 void Motor_RightForward(void)
 {
-    GPIO_WritePin(IN3_PORT, IN3_PIN, GPIO_HIGH);
-    GPIO_WritePin(IN4_PORT, IN4_PIN, GPIO_LOW);
+    GPIO_WritePin(IN3_PORT, IN3_PIN, GPIO_LOW);
+    GPIO_WritePin(IN4_PORT, IN4_PIN, GPIO_HIGH);
 }
 
 void Motor_RightBackward(void)
 {
-    GPIO_WritePin(IN3_PORT, IN3_PIN, GPIO_LOW);
-    GPIO_WritePin(IN4_PORT, IN4_PIN, GPIO_HIGH);
+    GPIO_WritePin(IN3_PORT, IN3_PIN, GPIO_HIGH);
+    GPIO_WritePin(IN4_PORT, IN4_PIN, GPIO_LOW);
 }
 
 void Motor_RightStop(void)

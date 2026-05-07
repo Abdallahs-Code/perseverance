@@ -4,7 +4,7 @@
 #include "std_types.h"
 
 #define MOVE_SPEED   70
-#define TURN_SPEED   60
+#define TURN_SPEED   70
 
 void Motor_Init(void);
 
