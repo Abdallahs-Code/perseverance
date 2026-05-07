@@ -35,16 +35,18 @@ int main(void) {
     while (1) {
         ultrasonicReadAllCm(distances, MAX_ECHO_US);
 
-        /* Multiply by 10, print as integer with manual decimal point */
-        int s1 = (int)(distances[0] * 10);
-        int s2 = (int)(distances[1] * 10);
-        int s3 = (int)(distances[2] * 10);
+        for (uint8_t i = 0; i < ULTRASONIC_SENSOR_COUNT; i++) {
+            if (distances[i] == ULTRASONIC_TIMEOUT) {
+                printf("s%d: timeout", i + 1);
+            } else {
+                int d = (int)(distances[i] * 10);
+                printf("s%d: %d.%d cm", i + 1, d / 10, d % 10);
+            }
 
-        printf("s1: %d.%d cm - s2: %d.%d cm - s3: %d.%d cm\n",
-            s1 / 10, s1 % 10,
-            s2 / 10, s2 % 10,
-            s3 / 10, s3 % 10);
+            if (i < ULTRASONIC_SENSOR_COUNT - 1) printf(" - ");
+        }
 
+        printf("\n");
         _delay_ms(500);
     }
 }
