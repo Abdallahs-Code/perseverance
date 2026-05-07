@@ -5,18 +5,31 @@
 #include "../MCAL_GPIO/gpio.h"
 #include "../../include/pin_config.h"
 
-#define SOUND_SPEED_CM_US    0.0343f
-#define TRIGGER_PULSE_US     10
-#define MAX_ECHO_US          30000UL
-#define MIN_STARTUP_DELAY_MS 60
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void ultrasonicBegin(void);
-unsigned long ultrasonicReadRawPulse(void);
-float ultrasonicReadDistanceCm(void);
+#define ULTRASONIC_NO_ECHO   -1.0f
+
+typedef struct {
+    volatile float   distance;    // cm
+    volatile uint8   ready;
+    volatile uint8   edge_state;
+    volatile uint16  rising_time;
+} UltrasonicSensor;
+
+extern UltrasonicSensor sensor_front;
+extern UltrasonicSensor sensor_left;
+extern UltrasonicSensor sensor_right;
+
+// Init GPIO directions and timers
+void Ultrasonic_Init(void);
+
+// Fire all three triggers simultaneously, ISRs take over
+void Ultrasonic_TriggerAll(void);
+
+// Block caller until all three sensors finish or timeout
+void Ultrasonic_WaitAll(void);
 
 #ifdef __cplusplus
 }
