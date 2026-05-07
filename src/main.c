@@ -22,7 +22,7 @@ static void uart_init(void) {
     UBRR0H = (uint8_t)(ubrr >> 8);
     UBRR0L = (uint8_t)(ubrr);
     UCSR0B = (1 << TXEN0);                      /* TX only, no RX needed */
-    UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);    /* 8-bit, 1 stop, no parity */
+    UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);     /* 8-bit, 1 stop, no parity */
     stdout = &uart_stdout;
 }
 
@@ -31,16 +31,18 @@ int main(void) {
     ultrasonicBegin();
 
     float distances[ULTRASONIC_SENSOR_COUNT];
+    uint8_t thresholds[ULTRASONIC_SENSOR_COUNT];
 
     while (1) {
         ultrasonicReadAllCm(distances, MAX_ECHO_US);
+        ultrasonicCheckThresholds(distances, thresholds);
 
         for (uint8_t i = 0; i < ULTRASONIC_SENSOR_COUNT; i++) {
             if (distances[i] == ULTRASONIC_TIMEOUT) {
-                printf("s%d: timeout", i + 1);
+                printf("s%d: timeout [%d]", i + 1, thresholds[i]);
             } else {
                 int d = (int)(distances[i] * 10);
-                printf("s%d: %d.%d cm", i + 1, d / 10, d % 10);
+                printf("s%d: %d.%d cm [%d]", i + 1, d / 10, d % 10, thresholds[i]);
             }
 
             if (i < ULTRASONIC_SENSOR_COUNT - 1) printf(" - ");
