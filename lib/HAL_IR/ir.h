@@ -15,5 +15,7 @@ uint8 IR_LeftRead(void);
 uint8 IR_RightRead(void);
 uint8 IR_FrontRead(void);
 
+void IR_ReadAll(uint8* left, uint8* front, uint8* right);
+
 
 #endif
