@@ -6,99 +6,81 @@
 #include <avr/io.h>
 
 /* ---------------------------------------------------------------
- * Number of sensors
+ * Pin configuration
  * --------------------------------------------------------------- */
-#define ULTRASONIC_SENSOR_COUNT  3
+#define TRIG_PORT       PORT_E
+#define TRIG_PIN_0      4       /* Arduino Mega D2 */
+#define TRIG_PIN_1      5       /* Arduino Mega D3 */
+#define TRIG_PIN_2      3       /* Arduino Mega D5 */
+
+#define ECHO_PORT       PORT_H
+#define ECHO_PIN_0      3       /* Arduino Mega D6 */
+#define ECHO_PIN_1      4       /* Arduino Mega D7 */
+#define ECHO_PIN_2      5       /* Arduino Mega D8 */
 
 /* ---------------------------------------------------------------
- * Sensor index aliases
+ * Sensor count
  * --------------------------------------------------------------- */
-#define ULTRASONIC_SENSOR_1      0
-#define ULTRASONIC_SENSOR_2      1
-#define ULTRASONIC_SENSOR_3      2
+#define ULTRASONIC_SENSOR_COUNT     3
 
 /* ---------------------------------------------------------------
- * TRIG pins — any free GPIO output pins
- *   Sensor 1 TRIG: Port F, Pin 0  (Arduino Mega pin A0 / pin 54)
- *   Sensor 2 TRIG: Port A, Pin 1  (Arduino Mega pin 23) - unused
- *   Sensor 3 TRIG: Port A, Pin 2  (Arduino Mega pin 24) - unused
+ * Timer3 configuration
+ * Prescaler = 8  →  1 tick = 0.5µs
+ * Max echo 30,000µs = 60,000 ticks — fits in 16-bit counter
  * --------------------------------------------------------------- */
-#define TRIG1_PORT   PORT_F
-#define TRIG1_PIN    0
-
-#define TRIG2_PORT   PORT_A
-#define TRIG2_PIN    1
-
-#define TRIG3_PORT   PORT_A
-#define TRIG3_PIN    2
-
-/* ---------------------------------------------------------------
- * ECHO pins — MUST be external interrupt pins on ATmega2560
- *   Sensor 1 ECHO: Arduino Mega pin 21 → INT0 → Port D, Pin 0
- *   Sensor 2 ECHO: Arduino Mega pin 3  → INT1 → Port D, Pin 1
- *   Sensor 3 ECHO: Arduino Mega pin 21 → INT2 → Port D, Pin 2
- * --------------------------------------------------------------- */
-#define ECHO1_PORT   PORT_D
-#define ECHO1_PIN    0   /* INT0 */
-
-#define ECHO2_PORT   PORT_D
-#define ECHO2_PIN    1   /* INT1 */
-
-#define ECHO3_PORT   PORT_D
-#define ECHO3_PIN    2   /* INT2 */
-
-/* ---------------------------------------------------------------
- * Timer3 configuration (16-bit, ATmega2560)
- *   Prescaler = 8  →  tick = 0.5 µs  →  overflow every ~32 ms
- * --------------------------------------------------------------- */
-#define TIMER3_PRESCALER_BITS    (1 << CS31)   /* prescaler = 8 */
-#define TICKS_PER_US             2UL            /* 2 ticks = 1 µs */
+#define TICKS_PER_US                2UL     /* 2 ticks = 1µs */
 
 /* ---------------------------------------------------------------
  * Timing constants
  * --------------------------------------------------------------- */
-#define SOUND_SPEED_CM_US        0.0343f
-#define TRIGGER_PULSE_US         10
-#define MIN_STARTUP_DELAY_MS     60
-#define MAX_ECHO_US              30000UL
+#define SOUND_SPEED_CM_US           0.0343f
+#define TRIGGER_PULSE_US            10
+#define MIN_STARTUP_DELAY_MS        60
+#define MAX_ECHO_US                 30000UL /* ~5m range cap    */
+#define INTER_SENSOR_DELAY_MS       20      /* settling between sensors */
 
 /* ---------------------------------------------------------------
- * Timeout detection
- *   Timer3 overflows every 128µs (prescaler=8, 16-bit at 16MHz
- *   — wait, Timer3 is 16-bit so overflow = 65536 ticks × 0.5µs
- *   = 32,768µs ≈ 32ms per overflow)
- *   MAX_ECHO_US / 32768µs ≈ 1 overflow covers full range.
- *   We use 2 overflows as a safe timeout margin.
+ * Return sentinels
+ *   -1.0f  timeout (echo never arrived or pulse too long)
  * --------------------------------------------------------------- */
-#define TIMEOUT_OVERFLOWS        2
+#define ULTRASONIC_TIMEOUT          -1.0f
 
 /* ---------------------------------------------------------------
- * Sensor ready state codes
- *   SENSOR_WAITING  — trigger sent, no echo yet
- *   SENSOR_READY    — echo received, data valid
- *   SENSOR_TIMEOUT  — echo never arrived within timeout window
+ * Per-sensor distance thresholds in cm
  * --------------------------------------------------------------- */
-#define SENSOR_WAITING           0
-#define SENSOR_READY             1
-#define SENSOR_TIMEOUT           2
+#define ULTRASONIC_THRESHOLD_0      20.0f   /* Sensor 0 */
+#define ULTRASONIC_THRESHOLD_1      20.0f   /* Sensor 1 */
+#define ULTRASONIC_THRESHOLD_2      20.0f   /* Sensor 2 */
 
 /* ---------------------------------------------------------------
- * Return values for ultrasonicGetDistanceCm()
- *   -1.0 → timeout  (no echo received)
- *   -2.0 → not ready yet (still waiting)
+ * Threshold check return codes
+ *   1 → object AT or BELOW threshold (too close)
+ *   0 → object ABOVE threshold (clear)
  * --------------------------------------------------------------- */
-#define ULTRASONIC_TIMEOUT       -1.0f
-#define ULTRASONIC_NOT_READY     -2.0f
+#define ULTRASONIC_BELOW_THRESHOLD  1
+#define ULTRASONIC_ABOVE_THRESHOLD  0
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+/* Initialize Timer3 and all TRIG/ECHO pins */
 void ultrasonicBegin(void);
-void ultrasonicTriggerAll(void);
-unsigned long ultrasonicGetRawPulse(uint8 sensorIndex);
-float ultrasonicGetDistanceCm(uint8 sensorIndex);
-uint8 ultrasonicIsReady(uint8 sensorIndex);
+
+/*
+ * Read all three sensors sequentially.
+ * results[3] — filled with distance in cm, or ULTRASONIC_TIMEOUT (-1.0f)
+ * timeoutUs  — microseconds to wait for ECHO, typically MAX_ECHO_US
+ */
+void ultrasonicReadAllCm(float results[ULTRASONIC_SENSOR_COUNT], uint32 timeoutUs);
+
+/*
+ * Check each sensor reading against its threshold.
+ * distances[3] — from ultrasonicReadAllCm()
+ * results[3]   — 1 if at/below threshold, 0 if above or timeout
+ */
+void ultrasonicCheckThresholds(float distances[ULTRASONIC_SENSOR_COUNT],
+                                uint8 results[ULTRASONIC_SENSOR_COUNT]);
 
 #ifdef __cplusplus
 }
