@@ -9,7 +9,14 @@
 extern "C" {
 #endif
 
-#define ULTRASONIC_NO_ECHO   -1.0f
+#define ULTRASONIC_NO_ECHO -1.0f
+
+#define ULTRASONIC_THRESHOLD_FRONT 20.0f   
+#define ULTRASONIC_THRESHOLD_LEFT 20.0f   
+#define ULTRASONIC_THRESHOLD_RIGHT 20.0f   
+
+#define ULTRASONIC_BELOW_THRESHOLD 1
+#define ULTRASONIC_ABOVE_THRESHOLD 0
 
 typedef struct {
     volatile float   distance;    // cm
@@ -18,21 +25,17 @@ typedef struct {
     volatile uint16  rising_time;
 } UltrasonicSensor;
 
-extern UltrasonicSensor sensor_front;
-extern UltrasonicSensor sensor_left;
-extern UltrasonicSensor sensor_right;
+UltrasonicSensor sensor_front;
+UltrasonicSensor sensor_left;
+UltrasonicSensor sensor_right;
 
 // Init GPIO directions and timers
 void Ultrasonic_Init(void);
 
-// Fire all three triggers simultaneously, ISRs take over
-void Ultrasonic_TriggerAll(void);
-
-// Block caller until all three sensors finish or timeout
-void Ultrasonic_WaitAll(void);
+void Ultrasonic_CheckThresholds(uint8 results[3]);
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* ULTRASONIC_H */
+#endif

@@ -12,8 +12,7 @@ UltrasonicSensor sensor_right;
 
 // ---- Front sensor: INT2 edge detection + Timer3 free-running counter ----
 
-static inline void front_finish(float dist)
-{
+static inline void front_finish(float dist) {
     EIMSK  &= ~(1 << INT2);
     TIMSK3 &= ~(1 << OCIE3A);
     sensor_front.edge_state = 0;
@@ -21,8 +20,7 @@ static inline void front_finish(float dist)
     sensor_front.ready      = 1;
 }
 
-ISR(INT2_vect)
-{
+ISR(INT2_vect) {
     uint16_t now = TCNT3;
     if (sensor_front.edge_state == 0) {
         sensor_front.rising_time = now;
@@ -33,8 +31,7 @@ ISR(INT2_vect)
     }
 }
 
-ISR(TIMER3_COMPA_vect)
-{
+ISR(TIMER3_COMPA_vect) {
     front_finish(ULTRASONIC_NO_ECHO);
 }
 
@@ -53,8 +50,7 @@ static inline void icu_finish(UltrasonicSensor *s,
     s->ready      = 1;
 }
 
-ISR(TIMER4_CAPT_vect)
-{
+ISR(TIMER4_CAPT_vect) {
     if (sensor_left.edge_state == 0) {
         sensor_left.rising_time = ICR4;
         sensor_left.edge_state  = 1;
@@ -66,13 +62,11 @@ ISR(TIMER4_CAPT_vect)
     }
 }
 
-ISR(TIMER4_COMPA_vect)
-{
+ISR(TIMER4_COMPA_vect) {
     icu_finish(&sensor_left, ULTRASONIC_NO_ECHO, &TIMSK4, OCIE4A, ICIE4);
 }
 
-ISR(TIMER5_CAPT_vect)
-{
+ISR(TIMER5_CAPT_vect) {
     if (sensor_right.edge_state == 0) {
         sensor_right.rising_time = ICR5;
         sensor_right.edge_state  = 1;
@@ -84,13 +78,11 @@ ISR(TIMER5_CAPT_vect)
     }
 }
 
-ISR(TIMER5_COMPA_vect)
-{
+ISR(TIMER5_COMPA_vect) {
     icu_finish(&sensor_right, ULTRASONIC_NO_ECHO, &TIMSK5, OCIE5A, ICIE5);
 }
 
-void Ultrasonic_Init(void)
-{
+void Ultrasonic_Init(void) {
     // TRIG pins as output
     DDRE |= (1 << TRIG_FRONT_PIN) | (1 << TRIG_LEFT_PIN);   // PE4, PE5
     DDRH |= (1 << TRIG_RIGHT_PIN);                          // PH4
@@ -132,8 +124,7 @@ static inline void arm_icu(UltrasonicSensor  *s,
 }
 
 // Arm the front sensor: Timer3 free-running counter + INT2 edge interrupt
-static inline void arm_front(void)
-{
+static inline void arm_front(void) {
     sensor_front.ready      = 0;
     sensor_front.edge_state = 0;
     TCNT3  = 0;
@@ -144,8 +135,7 @@ static inline void arm_front(void)
     TIMSK3 |= (1 << OCIE3A);
 }
 
-void Ultrasonic_TriggerAll(void)
-{
+void ultrasonic_trigger_all(void) {
     arm_front();
     arm_icu(&sensor_left,  &TCNT4, &OCR4A, &TCCR4B, &TIFR4, &TIMSK4,
             ICES4, ICF4, OCF4A, ICIE4, OCIE4A);
@@ -160,7 +150,47 @@ void Ultrasonic_TriggerAll(void)
     PORTH &= ~(1 << TRIG_RIGHT_PIN);
 }
 
-void Ultrasonic_WaitAll(void)
-{
+void ultrasonic_wait_all(void) {
     while (!sensor_front.ready || !sensor_left.ready || !sensor_right.ready);
+}
+
+float *ultrasonic_get_distances(void) {
+    ultrasonic_trigger_all();
+    ultrasonic_wait_all();
+
+    static float distances[3];
+
+    distances[0] = sensor_front.distance;
+    distances[1] = sensor_left.distance;
+    distances[2] = sensor_right.distance;
+
+    return distances;
+}
+
+void Ultrasonic_CheckThresholds(uint8 results[3]) {
+    float *distances = ultrasonic_get_distances();
+
+    if (distances[0] == -1.0f) {
+        results[0] = ULTRASONIC_ABOVE_THRESHOLD;
+    } else {
+        results[0] = (distances[0] <= ULTRASONIC_THRESHOLD_FRONT) 
+                            ? ULTRASONIC_BELOW_THRESHOLD
+                            : ULTRASONIC_ABOVE_THRESHOLD;
+    }
+
+    if (distances[1] == -1.0f) {
+        results[1] = ULTRASONIC_ABOVE_THRESHOLD;
+    } else {
+        results[1] = (distances[1] <= ULTRASONIC_THRESHOLD_LEFT) 
+                            ? ULTRASONIC_BELOW_THRESHOLD
+                            : ULTRASONIC_ABOVE_THRESHOLD;
+    }
+
+    if (distances[2] == -1.0f) {
+        results[2] = ULTRASONIC_ABOVE_THRESHOLD;
+    } else {
+        results[2] = (distances[2] <= ULTRASONIC_THRESHOLD_RIGHT) 
+                            ? ULTRASONIC_BELOW_THRESHOLD
+                            : ULTRASONIC_ABOVE_THRESHOLD;
+    }
 }
