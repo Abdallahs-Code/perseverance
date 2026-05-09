@@ -1,6 +1,8 @@
 #include "timer.h"
 #include <avr/io.h>
 
+
+/* Timer 1 - Motors PWM */
 void Timer1_PWM_Init(void)
 {
     // OC1A (PB5 = D11), OC1B (PB6 = D12)
@@ -36,4 +38,24 @@ void Timer1_SetDuty(uint8 channel, uint8 duty)
             OCR1B = value; // D12
             break;
     }
+}
+
+/* Timer 3 Functions - Used for Ultra Sonic */
+/* ---------------------------------------------------------------
+ * Timer3 helpers
+ * Normal mode, prescaler=8.  TCNT3 read directly — no ISR needed
+ * because max echo (30,000µs = 60,000 ticks) fits in 16-bit counter.
+ * --------------------------------------------------------------- */
+void Timer3_Init(void) {
+    TCCR3A = 0x00;
+    TCCR3B = (1 << CS31);   /* Prescaler = 8, normal mode */
+    TCNT3  = 0;
+}
+
+uint16 Timer3_Now(void) {
+    return TCNT3;
+}
+
+uint16 Timer3_Elapsed(uint16 start) {
+    return (uint16)(TCNT3 - start);
 }

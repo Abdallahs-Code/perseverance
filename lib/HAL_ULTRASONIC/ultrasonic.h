@@ -35,4 +35,4 @@ void Ultrasonic_WaitAll(void);
 }
 #endif
 
-#endif
+#endif /* ULTRASONIC_H */

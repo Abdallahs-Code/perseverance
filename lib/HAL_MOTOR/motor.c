@@ -44,14 +44,14 @@ void Motor_LeftStop(void)
 /* RIGHT MOTOR */
 void Motor_RightForward(void)
 {
-    GPIO_WritePin(IN3_PORT, IN3_PIN, GPIO_HIGH);
-    GPIO_WritePin(IN4_PORT, IN4_PIN, GPIO_LOW);
+    GPIO_WritePin(IN3_PORT, IN3_PIN, GPIO_LOW);
+    GPIO_WritePin(IN4_PORT, IN4_PIN, GPIO_HIGH);
 }
 
 void Motor_RightBackward(void)
 {
-    GPIO_WritePin(IN3_PORT, IN3_PIN, GPIO_LOW);
-    GPIO_WritePin(IN4_PORT, IN4_PIN, GPIO_HIGH);
+    GPIO_WritePin(IN3_PORT, IN3_PIN, GPIO_HIGH);
+    GPIO_WritePin(IN4_PORT, IN4_PIN, GPIO_LOW);
 }
 
 void Motor_RightStop(void)
@@ -69,4 +69,52 @@ void Motor_SetLeftSpeed(uint8 duty)
 void Motor_SetRightSpeed(uint8 duty)
 {
     Timer1_SetDuty(TIMER1_CHANNEL_B, duty);
+}
+
+/* CAR MOVEMENT CONTROL */
+void Car_MoveForward(void)
+{
+    Motor_LeftForward();
+    Motor_RightForward();
+
+    Motor_SetLeftSpeed(MOVE_SPEED);
+    Motor_SetRightSpeed(MOVE_SPEED);
+}
+
+void Car_MoveBackward(void)
+{
+    Motor_LeftBackward();
+    Motor_RightBackward();
+
+    Motor_SetLeftSpeed(MOVE_SPEED);
+    Motor_SetRightSpeed(MOVE_SPEED);
+}
+
+
+void Car_TurnRight(void)
+{
+    Motor_LeftForward();
+    Motor_RightBackward();
+
+    Motor_SetLeftSpeed(TURN_SPEED);
+    Motor_SetRightSpeed(TURN_SPEED);
+}
+
+void Car_TurnLeft(void)
+{
+    Motor_LeftBackward();
+    Motor_RightForward();
+
+    Motor_SetLeftSpeed(TURN_SPEED);
+    Motor_SetRightSpeed(TURN_SPEED);
+}
+
+
+void Car_Stop(void)
+{
+    Motor_LeftStop();
+    Motor_RightStop();
+
+    Motor_SetLeftSpeed(0);
+    Motor_SetRightSpeed(0);
 }

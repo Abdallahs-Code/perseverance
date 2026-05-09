@@ -21,3 +21,10 @@ uint8 IR_FrontRead(void)
 {
     return !GPIO_ReadPin(IR_FRONT_PORT, IR_FRONT_PIN);
 }
+
+void IR_ReadAll(uint8* left, uint8* front, uint8* right)
+{
+    *left  = IR_LeftRead();
+    *front = IR_FrontRead();
+    *right = IR_RightRead();
+}
