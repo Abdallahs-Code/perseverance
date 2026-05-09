@@ -37,7 +37,7 @@
 #define TRIGGER_PULSE_US            10
 #define MIN_STARTUP_DELAY_MS        60
 #define MAX_ECHO_US                 30000UL /* ~5m range cap    */
-#define INTER_SENSOR_DELAY_MS       20      /* settling between sensors */
+#define INTER_SENSOR_DELAY_MS       5       /* settling between sensors */
 
 /* ---------------------------------------------------------------
  * Return sentinels
