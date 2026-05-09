@@ -9,14 +9,14 @@
  * Pin configuration
  * --------------------------------------------------------------- */
 #define TRIG_PORT       PORT_E
-#define TRIG_PIN_0      4       /* Arduino Mega D2 */
-#define TRIG_PIN_1      5       /* Arduino Mega D3 */
-#define TRIG_PIN_2      3       /* Arduino Mega D5 */
+#define TRIG_PIN_0      4       /* Arduino Mega D2 (left) */ 
+#define TRIG_PIN_1      5       /* Arduino Mega D3 (front) */
+#define TRIG_PIN_2      3       /* Arduino Mega D5 (right) */
 
 #define ECHO_PORT       PORT_H
-#define ECHO_PIN_0      3       /* Arduino Mega D6 */
-#define ECHO_PIN_1      4       /* Arduino Mega D7 */
-#define ECHO_PIN_2      5       /* Arduino Mega D8 */
+#define ECHO_PIN_0      3       /* Arduino Mega D6 (left) */
+#define ECHO_PIN_1      4       /* Arduino Mega D7 (front) */
+#define ECHO_PIN_2      5       /* Arduino Mega D8 (right) */
 
 /* ---------------------------------------------------------------
  * Sensor count
