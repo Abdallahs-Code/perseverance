@@ -34,7 +34,6 @@ int main(void)
         else        Serial.println(r, 1);
 
         Serial.println("---");
-
-        delay(200);
+        _delay_ms(1000);
     }
 }
