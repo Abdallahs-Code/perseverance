@@ -29,9 +29,14 @@
 #define IR_FRONT_PIN   2   // D35
 
 // Ultrasonic sensors
-#define TRIG_PORT        PORT_E
-#define TRIG_FRONT_PIN   4    // PE4
-#define TRIG_LEFT_PIN    5    // PE5
-#define TRIG_RIGHT_PIN   6    // PE6
+// TRIG pins (any GPIO works — must be header-accessible on Mega 2560 R3)
+#define TRIG_FRONT_PIN   4    // PE4 = D2
+#define TRIG_LEFT_PIN    5    // PE5 = D3
+#define TRIG_RIGHT_PIN   4    // PH4 = D7
+
+// ECHO pins (chosen for ICU/INT support):
+//   Front -> PD2 (D19) = INT2,  timestamped against Timer3
+//   Left  -> PL0 (D49) = ICP4,  Timer4 input capture
+//   Right -> PL1 (D48) = ICP5,  Timer5 input capture
 
 #endif
