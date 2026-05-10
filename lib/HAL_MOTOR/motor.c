@@ -4,7 +4,6 @@
 #include "pin_config.h"
 
 /*
-Assumptions:
 - Left motor: IN1, IN2
 - Right motor: IN3, IN4
 - PWM: OC1A = Left speed, OC1B = Right speed
@@ -12,13 +11,14 @@ Assumptions:
 
 void Motor_Init(void)
 {
-    // Direction pins
+    // Set motor pins as output
     GPIO_SetPinDirection(IN1_PORT, IN1_PIN, GPIO_OUTPUT);
     GPIO_SetPinDirection(IN2_PORT, IN2_PIN, GPIO_OUTPUT);
     GPIO_SetPinDirection(IN3_PORT, IN3_PIN, GPIO_OUTPUT);
     GPIO_SetPinDirection(IN4_PORT, IN4_PIN, GPIO_OUTPUT);
 
-    // PWM init
+    //Starts Timer1 in PWM mode
+    // PWM controls motor speed
     Timer1_PWM_Init();
 }
 
