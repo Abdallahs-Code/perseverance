@@ -12,6 +12,8 @@
 #define LEFT_MIN_DISTANCE   13
 #define RIGHT_MIN_DISTANCE  13
 
+#define POST_CORNER_MIN_DISTANCE  20
+
 void Motor_Init(void);
 
 // Left motor
