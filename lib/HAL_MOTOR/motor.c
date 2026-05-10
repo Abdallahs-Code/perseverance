@@ -118,3 +118,21 @@ void Car_Stop(void)
     Motor_SetLeftSpeed(0);
     Motor_SetRightSpeed(0);
 }
+
+void Car_RightAlign(void)
+{
+    Motor_LeftForward();
+    Motor_RightForward();
+
+    Motor_SetLeftSpeed(ALIGN_LOW_SPEED);
+    Motor_SetRightSpeed(ALIGN_HIGH_SPEED);
+}
+
+void Car_LeftAlign(void)
+{
+    Motor_LeftForward();
+    Motor_RightForward();
+
+    Motor_SetLeftSpeed(ALIGN_HIGH_SPEED);
+    Motor_SetRightSpeed(ALIGN_LOW_SPEED);
+}

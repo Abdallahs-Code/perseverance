@@ -13,8 +13,8 @@ void Bluetooth_Init(uint32_t baudRate)
 
   // USART Control and Status Register 0 B
   // ENABLE TX1 and RX1
-  SET_BIT(UCSR1B, TXEN1);
-  SET_BIT(UCSR1B, RXEN1);
+  SET_BIT(UCSR1B, TXEN2);
+  SET_BIT(UCSR1B, RXEN2);
 
   // USART Control and Status Register 0 C
   // 8 bits data one stop bit
