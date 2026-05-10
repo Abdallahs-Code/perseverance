@@ -14,6 +14,9 @@ FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState)
             if (l == 0 && f == 0 && r == 1)
                 return STATE_POSSIBLE_LEFT_CORNER;
 
+            if (l == 0 && f == 0 && r == 0) // you may remove this center f == 0
+                return STATE_FINISH;                
+
             return STATE_DEFAULT;
 
 
@@ -68,7 +71,7 @@ FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState)
         /* ========== POST RIGHT CORNER ========== */
         case STATE_POST_RIGHT_CORNER:
 
-            if (l == 1 && f == 0 && r == 1)
+            if (l == 1  && r == 1) //&& f == 0
                 return STATE_DEFAULT;
 
             return STATE_POST_RIGHT_CORNER;
@@ -77,7 +80,7 @@ FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState)
         /* ========== POST LEFT CORNER ========== */
         case STATE_POST_LEFT_CORNER:
 
-            if (l == 1 && f == 0 && r == 1)
+            if (l == 1  && r == 1) //&& f == 0
                 return STATE_DEFAULT;
 
             return STATE_POST_LEFT_CORNER;
@@ -92,6 +95,10 @@ FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState)
 
         /* ========== FINISH ========== */
         case STATE_FINISH:
+
+            if (l == 1 && f == 0 && r == 1)
+                return STATE_DEFAULT;
+
             return STATE_FINISH;
 
 

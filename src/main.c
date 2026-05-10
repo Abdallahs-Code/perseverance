@@ -1,8 +1,9 @@
 #include "../lib/HAL_ULTRASONIC/ultrasonic.h"
 #include "fsm.h"
 #include "motor.h"
+#include "bluetooth.h"
 
-FSM_State_t currentState = STATE_DEFAULT;
+FSM_State_t currentState = STATE_FINISH;
 
 int main(void)
 {
@@ -15,6 +16,8 @@ int main(void)
 
     Motor_Init();
     ultrasonicBegin();
+    // Bluetooth_Init(9600);
+    //delay(10000); //debugging
 
     while (1)
     {
@@ -30,8 +33,18 @@ int main(void)
 
         while (currentState == STATE_DEFAULT)
         {
-            Car_MoveForward();
-
+            // if (distances[0] < LEFT_MIN_DISTANCE)
+            // {
+            //     Car_LeftAlign();
+            // }
+            // else if (distances[2] < RIGHT_MIN_DISTANCE)
+            // {
+            //     Car_RightAlign();
+            // }
+            // else
+            // {
+                Car_MoveForward();
+            // }
             ultrasonicReadAllCm(distances, MAX_ECHO_US);
             ultrasonicCheckThresholds(distances, thresholds);
             leftSensor  = thresholds[0];
@@ -44,6 +57,21 @@ int main(void)
                                 rightSensor,
                                 currentState
                            );
+            // char message[150];
+
+            // sprintf(
+            //     message,
+            //     "L:%d F:%d R:%d State:%d | DL:%.2f DF:%.2f DR:%.2f\r\n",
+            //     leftSensor,
+            //     frontSensor,
+            //     rightSensor,
+            //     currentState,
+            //     distances[0],
+            //     distances[1],
+            //     distances[2]
+            // );
+
+            // Bluetooth_Send(message);
         }
 
 
@@ -65,6 +93,22 @@ int main(void)
                                 rightSensor,
                                 currentState
                            );
+
+            // char message[150];
+
+            // sprintf(
+            //     message,
+            //     "L:%d F:%d R:%d State:%d | DL:%.2f DF:%.2f DR:%.2f\r\n",
+            //     leftSensor,
+            //     frontSensor,
+            //     rightSensor,
+            //     currentState,
+            //     distances[0],
+            //     distances[1],
+            //     distances[2]
+            // );
+
+            // Bluetooth_Send(message);                           
         }
 
 
@@ -86,6 +130,21 @@ int main(void)
                                 rightSensor,
                                 currentState
                            );
+            // char message[150];
+
+            // sprintf(
+            //     message,
+            //     "L:%d F:%d R:%d State:%d | DL:%.2f DF:%.2f DR:%.2f\r\n",
+            //     leftSensor,
+            //     frontSensor,
+            //     rightSensor,
+            //     currentState,
+            //     distances[0],
+            //     distances[1],
+            //     distances[2]
+            // );
+
+            // Bluetooth_Send(message);                           
         }
 
 
@@ -107,6 +166,21 @@ int main(void)
                                 rightSensor,
                                 currentState
                            );
+            // char message[150];
+
+            // sprintf(
+            //     message,
+            //     "L:%d F:%d R:%d State:%d | DL:%.2f DF:%.2f DR:%.2f\r\n",
+            //     leftSensor,
+            //     frontSensor,
+            //     rightSensor,
+            //     currentState,
+            //     distances[0],
+            //     distances[1],
+            //     distances[2]
+            // );
+
+            // Bluetooth_Send(message);                           
         }
 
 
@@ -128,6 +202,21 @@ int main(void)
                                 rightSensor,
                                 currentState
                            );
+            // char message[150];
+
+            // sprintf(
+            //     message,
+            //     "L:%d F:%d R:%d State:%d | DL:%.2f DF:%.2f DR:%.2f\r\n",
+            //     leftSensor,
+            //     frontSensor,
+            //     rightSensor,
+            //     currentState,
+            //     distances[0],
+            //     distances[1],
+            //     distances[2]
+            // );
+
+            // Bluetooth_Send(message);                           
         }
 
 
@@ -149,6 +238,21 @@ int main(void)
                                 rightSensor,
                                 currentState
                            );
+            // char message[150];
+
+            // sprintf(
+            //     message,
+            //     "L:%d F:%d R:%d State:%d | DL:%.2f DF:%.2f DR:%.2f\r\n",
+            //     leftSensor,
+            //     frontSensor,
+            //     rightSensor,
+            //     currentState,
+            //     distances[0],
+            //     distances[1],
+            //     distances[2]
+            // );
+
+            // Bluetooth_Send(message);                           
         }
 
 
@@ -170,6 +274,22 @@ int main(void)
                                 rightSensor,
                                 currentState
                            );
+
+            // char message[150];
+
+            // sprintf(
+            //     message,
+            //     "L:%d F:%d R:%d State:%d | DL:%.2f DF:%.2f DR:%.2f\r\n",
+            //     leftSensor,
+            //     frontSensor,
+            //     rightSensor,
+            //     currentState,
+            //     distances[0],
+            //     distances[1],
+            //     distances[2]
+            // );
+
+            // Bluetooth_Send(message);                           
         }
 
 
@@ -178,6 +298,19 @@ int main(void)
         while (currentState == STATE_FINISH)
         {
             Car_Stop();
+            
+            ultrasonicReadAllCm(distances, MAX_ECHO_US);
+            ultrasonicCheckThresholds(distances, thresholds);
+            leftSensor  = thresholds[0];
+            frontSensor = thresholds[1];
+            rightSensor = thresholds[2];
+
+            currentState = FSM_UpdateState(
+                                leftSensor,
+                                frontSensor,
+                                rightSensor,
+                                currentState
+                           );            
         }
     }
 }

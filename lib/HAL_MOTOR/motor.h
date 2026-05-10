@@ -6,6 +6,12 @@
 #define MOVE_SPEED   70
 #define TURN_SPEED   70
 
+#define ALIGN_HIGH_SPEED  70
+#define ALIGN_LOW_SPEED   60
+
+#define LEFT_MIN_DISTANCE   10
+#define RIGHT_MIN_DISTANCE  10
+
 void Motor_Init(void);
 
 // Left motor
@@ -30,5 +36,8 @@ void Car_TurnRight(void);
 void Car_TurnLeft(void);
 
 void Car_Stop(void);
+
+void Car_RightAlign(void);
+void Car_LeftAlign(void);
 
 #endif
