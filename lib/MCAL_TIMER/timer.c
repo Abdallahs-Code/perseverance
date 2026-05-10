@@ -2,7 +2,7 @@
 #include <avr/io.h>
 
 
-/* Timer 1 - Motors PWM */
+// Timer 1 - Motors PWM
 void Timer1_PWM_Init(void)
 {
     // OC1A (PB5 = D11), OC1B (PB6 = D12)
@@ -16,6 +16,13 @@ void Timer1_PWM_Init(void)
     TCCR1A |= (1 << COM1A1) | (1 << COM1B1);
 
     // Frequency setup (~10kHz)
+    /*
+    Frequency Calculation
+
+    Clock = 16 MHz, Prescaler = 8
+    Formula:
+    fPWM = 16x10^6 / 8 x (1 + 199) = 10 kHz
+    */
     ICR1 = 199;
 
     // Prescaler = 8
