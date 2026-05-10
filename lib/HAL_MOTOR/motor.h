@@ -9,8 +9,8 @@
 #define ALIGN_HIGH_SPEED  70
 #define ALIGN_LOW_SPEED   60
 
-#define LEFT_MIN_DISTANCE   10
-#define RIGHT_MIN_DISTANCE  10
+#define LEFT_MIN_DISTANCE   13
+#define RIGHT_MIN_DISTANCE  13
 
 void Motor_Init(void);
 

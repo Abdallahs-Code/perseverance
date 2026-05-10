@@ -33,18 +33,18 @@ int main(void)
 
         while (currentState == STATE_DEFAULT)
         {
-            // if (distances[0] < LEFT_MIN_DISTANCE)
-            // {
-            //     Car_LeftAlign();
-            // }
-            // else if (distances[2] < RIGHT_MIN_DISTANCE)
-            // {
-            //     Car_RightAlign();
-            // }
-            // else
-            // {
+            if (distances[0] < LEFT_MIN_DISTANCE)
+            {
+                Car_LeftAlign();
+            }
+            else if (distances[2] < RIGHT_MIN_DISTANCE)
+            {
+                Car_RightAlign();
+            }
+            else
+            {
                 Car_MoveForward();
-            // }
+            }
             ultrasonicReadAllCm(distances, MAX_ECHO_US);
             ultrasonicCheckThresholds(distances, thresholds);
             leftSensor  = thresholds[0];

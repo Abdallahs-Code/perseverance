@@ -48,9 +48,9 @@
 /* ---------------------------------------------------------------
  * Per-sensor distance thresholds in cm
  * --------------------------------------------------------------- */
-#define ULTRASONIC_THRESHOLD_0      25.0f   /* Sensor 0 */
+#define ULTRASONIC_THRESHOLD_0      30.0f   /* Sensor 0 */
 #define ULTRASONIC_THRESHOLD_1      20.0f   /* Sensor 1 */
-#define ULTRASONIC_THRESHOLD_2      25.0f   /* Sensor 2 */
+#define ULTRASONIC_THRESHOLD_2      30.0f   /* Sensor 2 */
 
 /* ---------------------------------------------------------------
  * Threshold check return codes
