@@ -167,29 +167,38 @@ float *ultrasonic_get_distances(void) {
     return distances;
 }
 
-void Ultrasonic_CheckThresholds(uint8 results[3]) {
-    float *distances = ultrasonic_get_distances();
+void Ultrasonic_CheckSensors(float distances[3], uint8 results[3]) {
+    float *dists = ultrasonic_get_distances();
 
-    if (distances[0] == -1.0f) {
+    for (uint8 i = 0; i < 3; i++) {
+        if (dists[i] == -1.0f) {
+            distances[i] = 0.0f;
+        }
+        else {
+            distances[i] = dists[i];
+        }
+    }
+
+    if (dists[0] == -1.0f) {
         results[0] = ULTRASONIC_ABOVE_THRESHOLD;
     } else {
-        results[0] = (distances[0] <= ULTRASONIC_THRESHOLD_FRONT) 
+        results[0] = (dists[0] <= ULTRASONIC_THRESHOLD_FRONT) 
                             ? ULTRASONIC_BELOW_THRESHOLD
                             : ULTRASONIC_ABOVE_THRESHOLD;
     }
 
-    if (distances[1] == -1.0f) {
+    if (dists[1] == -1.0f) {
         results[1] = ULTRASONIC_ABOVE_THRESHOLD;
     } else {
-        results[1] = (distances[1] <= ULTRASONIC_THRESHOLD_LEFT) 
+        results[1] = (dists[1] <= ULTRASONIC_THRESHOLD_LEFT) 
                             ? ULTRASONIC_BELOW_THRESHOLD
                             : ULTRASONIC_ABOVE_THRESHOLD;
     }
 
-    if (distances[2] == -1.0f) {
+    if (dists[2] == -1.0f) {
         results[2] = ULTRASONIC_ABOVE_THRESHOLD;
     } else {
-        results[2] = (distances[2] <= ULTRASONIC_THRESHOLD_RIGHT) 
+        results[2] = (dists[2] <= ULTRASONIC_THRESHOLD_RIGHT) 
                             ? ULTRASONIC_BELOW_THRESHOLD
                             : ULTRASONIC_ABOVE_THRESHOLD;
     }

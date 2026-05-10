@@ -11,21 +11,20 @@ int main(void)
     Ultrasonic_Init();
     sei();
 
+    float distances[3];
     uint8_t results[3];
 
     while (1)
     {
-        Serial.print("Start measurement... ");
-        Ultrasonic_CheckThresholds(results);
+        Ultrasonic_CheckSensors(distances, results);
 
-        float f = sensor_front.distance;
-        float l = sensor_left.distance;
-        float r = sensor_right.distance;
+        Serial.print(distances[0], 1); Serial.print(" ");
+        Serial.print(distances[1], 1); Serial.print(" ");
+        Serial.print(distances[2], 1); Serial.print(" ");
+        Serial.print(results[0]); Serial.print(" ");
+        Serial.print(results[1]); Serial.print(" ");
+        Serial.println(results[2]);
 
-        Serial.print("Front: "); Serial.print(results[0]);
-        Serial.print(" | Left: "); Serial.print(results[1]);
-        Serial.print(" | Right: "); Serial.println(results[2]);
-        
         _delay_ms(20);
     }
 }

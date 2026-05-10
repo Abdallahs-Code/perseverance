@@ -32,7 +32,7 @@ UltrasonicSensor sensor_right;
 // Init GPIO directions and timers
 void Ultrasonic_Init(void);
 
-void Ultrasonic_CheckThresholds(uint8 results[3]);
+void Ultrasonic_CheckSensors(float distances[3], uint8 results[3]);
 
 #ifdef __cplusplus
 }
