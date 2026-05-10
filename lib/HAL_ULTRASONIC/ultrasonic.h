@@ -9,6 +9,8 @@
 extern "C" {
 #endif
 
+#define ULTRASONIC_SENSOR_COUNT 3
+
 #define ULTRASONIC_NO_ECHO -1.0f
 
 #define ULTRASONIC_THRESHOLD_FRONT 20.0f   
