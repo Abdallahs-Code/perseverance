@@ -71,7 +71,8 @@ int main(void)
                                 leftSensor,
                                 frontSensor,
                                 rightSensor,
-                                currentState
+                                currentState,
+                                NULL
                            );
         }
 
@@ -103,7 +104,8 @@ int main(void)
                                 leftSensor,
                                 frontSensor,
                                 rightSensor,
-                                currentState
+                                currentState,
+                                distances
                            );
                          
         }
@@ -138,7 +140,8 @@ int main(void)
                                 leftSensor,
                                 frontSensor,
                                 rightSensor,
-                                currentState
+                                currentState, 
+                                NULL
                            );                       
         }
 
@@ -170,7 +173,8 @@ int main(void)
                                 leftSensor,
                                 frontSensor,
                                 rightSensor,
-                                currentState
+                                currentState, 
+                                NULL
                            );                        
         }
 
@@ -202,7 +206,8 @@ int main(void)
                                 leftSensor,
                                 frontSensor,
                                 rightSensor,
-                                currentState
+                                currentState, 
+                                distances
                            );                         
         }
 
@@ -235,7 +240,8 @@ int main(void)
                                 leftSensor,
                                 frontSensor,
                                 rightSensor,
-                                currentState
+                                currentState, 
+                                NULL
                            );                       
         }
 
@@ -267,7 +273,8 @@ int main(void)
                                 leftSensor,
                                 frontSensor,
                                 rightSensor,
-                                currentState
+                                currentState, 
+                                NULL
                            );                    
         }
 
@@ -324,7 +331,8 @@ int main(void)
                                 leftSensor,
                                 frontSensor,
                                 rightSensor,
-                                currentState
+                                currentState, 
+                                NULL
                            );            
         }
     }
