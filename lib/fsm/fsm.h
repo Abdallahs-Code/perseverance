@@ -23,7 +23,7 @@ typedef enum
 
 } FSM_State_t;
 
-FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState);
+FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState, float* distances);
 
 
 #endif
