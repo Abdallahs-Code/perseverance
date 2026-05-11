@@ -3,8 +3,8 @@
 
 #include "std_types.h"
 
-#define MOVE_SPEED   70
-#define TURN_SPEED   70
+#define MOVE_SPEED   65
+#define TURN_SPEED   65
 
 #define ALIGN_HIGH_SPEED  70
 #define ALIGN_LOW_SPEED   60

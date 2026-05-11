@@ -29,7 +29,7 @@ FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState,
             if (l == 1 && f == 1 && r == 0)
                 return STATE_RIGHT_CORNER;
 
-            if ((l == 0 && f == 0 && r == 0) && (distances[0] > 35 && distances[1] > 35 && distances[2] > 35))
+            if ((l == 0 && f == 0 && r == 0) && (distances[0] > 45 && distances[1] > 45 && distances[2] > 45))
                 return STATE_FINISH;
 
             return STATE_POSSIBLE_RIGHT_CORNER;
@@ -44,7 +44,7 @@ FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState,
             if (l == 0 && f == 1 && r == 1)
                 return STATE_LEFT_CORNER;
 
-            if ((l == 0 && f == 0 && r == 0) && (distances[0] > 35 && distances[1] > 35 && distances[2] > 35))
+            if ((l == 0 && f == 0 && r == 0) && (distances[0] > 45 && distances[1] > 45 && distances[2] > 45))
                 return STATE_FINISH;
 
             return STATE_POSSIBLE_LEFT_CORNER;

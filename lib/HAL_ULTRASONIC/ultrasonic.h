@@ -6,10 +6,10 @@
 #include <avr/io.h>
 
 // Pin configuration
-#define TRIG_PORT       PORT_A
-#define TRIG_PIN_0      4       // Arduino Mega D26
-#define TRIG_PIN_1      5       // Arduino Mega D27
-#define TRIG_PIN_2      6       // Arduino Mega D28
+#define TRIG_PORT       PORT_L
+#define TRIG_PIN_0      5       /* Arduino Mega D44 */
+#define TRIG_PIN_1      6       /* Arduino Mega D43 */
+#define TRIG_PIN_2      7       /* Arduino Mega D42 */
 
 #define ECHO_PORT       PORT_H
 #define ECHO_PIN_0      3       // Arduino Mega D6
@@ -35,9 +35,9 @@
 #define ULTRASONIC_TIMEOUT          -1.0f
 
 // Per-sensor distance thresholds in cm
-#define ULTRASONIC_THRESHOLD_0      25.0f   // Sensor 0
-#define ULTRASONIC_THRESHOLD_1      20.0f   // Sensor 1
-#define ULTRASONIC_THRESHOLD_2      25.0f   // Sensor 2
+#define ULTRASONIC_THRESHOLD_0      30.0f   // Sensor 0
+#define ULTRASONIC_THRESHOLD_1      25.0f   // Sensor 1
+#define ULTRASONIC_THRESHOLD_2      30.0f   // Sensor 2
 
 // Threshold check return codes
 #define ULTRASONIC_BELOW_THRESHOLD  1
