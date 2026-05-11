@@ -8,10 +8,10 @@
 /* ---------------------------------------------------------------
  * Pin configuration
  * --------------------------------------------------------------- */
-#define TRIG_PORT       PORT_E
-#define TRIG_PIN_0      4       /* Arduino Mega D2 */
-#define TRIG_PIN_1      5       /* Arduino Mega D3 */
-#define TRIG_PIN_2      3       /* Arduino Mega D5 */
+#define TRIG_PORT       PORT_A
+#define TRIG_PIN_0      4       /* Arduino Mega D26 */
+#define TRIG_PIN_1      5       /* Arduino Mega D27 */
+#define TRIG_PIN_2      6       /* Arduino Mega D28 */
 
 #define ECHO_PORT       PORT_H
 #define ECHO_PIN_0      3       /* Arduino Mega D6 */
@@ -48,9 +48,9 @@
 /* ---------------------------------------------------------------
  * Per-sensor distance thresholds in cm
  * --------------------------------------------------------------- */
-#define ULTRASONIC_THRESHOLD_0      30.0f   /* Sensor 0 */
-#define ULTRASONIC_THRESHOLD_1      20.0f   /* Sensor 1 */
-#define ULTRASONIC_THRESHOLD_2      30.0f   /* Sensor 2 */
+#define ULTRASONIC_THRESHOLD_0      45.0f   /* Sensor 0 */
+#define ULTRASONIC_THRESHOLD_1      25.0f   /* Sensor 1 */
+#define ULTRASONIC_THRESHOLD_2      45.0f   /* Sensor 2 */
 
 /* ---------------------------------------------------------------
  * Threshold check return codes

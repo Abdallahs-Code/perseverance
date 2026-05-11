@@ -32,7 +32,7 @@ int main(void)
 
     Motor_Init();
     ultrasonicBegin();
-    // Bluetooth_Init(9600);
+     Bluetooth_Init(9600);
     //delay(10000); //debugging
 
     while (1)
@@ -118,13 +118,13 @@ int main(void)
         while (currentState == STATE_RIGHT_CORNER)
         {
 
-            // if (rightTurnSaved == 0)
-            // {
-            //     turnSequence[turnCount] = 'R';
-            //     turnCount++;
+            if (rightTurnSaved == 0)
+            {
+                turnSequence[turnCount] = 'R';
+                turnCount++;
 
-            //     rightTurnSaved = 1;
-            // }  
+                rightTurnSaved = 1;
+            }  
 
             Car_TurnRight();          
 
@@ -215,13 +215,13 @@ int main(void)
         while (currentState == STATE_LEFT_CORNER)
         {
 
-            // if (leftTurnSaved == 0)
-            // {
-            //     turnSequence[turnCount] = 'L';
-            //     turnCount++;
+            if (leftTurnSaved == 0)
+            {
+                turnSequence[turnCount] = 'L';
+                turnCount++;
 
-            //     leftTurnSaved  = 1;
-            // }         
+                leftTurnSaved  = 1;
+            }         
 
             Car_TurnLeft();
 
@@ -284,35 +284,35 @@ int main(void)
         {
             Car_Stop();
 
-            // if (finishSent == 0 && first_time == 0)
-            // {
-            //     /* Start message */
-            //     sprintf(message, "Turns: %d\r\nSequence: ", turnCount);
+            if (finishSent == 0 && first_time == 0)
+            {
+                /* Start message */
+                sprintf(message, "Turns: %d\r\nSequence: ", turnCount);
 
-            //     /* Append all turns */
-            //     for (i = 0; i < turnCount; i++)
-            //     {
-            //         char temp[5];
+                /* Append all turns */
+                for (i = 0; i < turnCount; i++)
+                {
+                    char temp[5];
 
-            //         sprintf(temp, "%c", turnSequence[i]);
+                    sprintf(temp, "%c", turnSequence[i]);
 
-            //         strcat(message, temp);
+                    strcat(message, temp);
 
-            //         if (i < turnCount - 1)
-            //         {
-            //             strcat(message, ", ");
-            //         }
-            //     }
+                    if (i < turnCount - 1)
+                    {
+                        strcat(message, ", ");
+                    }
+                }
 
-            //     strcat(message, "\r\n");
+                strcat(message, "\r\n");
 
-            //     /* Send once */
-            //     Bluetooth_Send(message);
+                /* Send once */
+                Bluetooth_Send(message);
 
 
-            //     turnCount = 0;
-            //     finishSent = 1;
-            // }            
+                turnCount = 0;
+                finishSent = 1;
+            }            
             
             ultrasonicReadAllCm(distances, MAX_ECHO_US);
             ultrasonicCheckThresholds(distances, thresholds);
