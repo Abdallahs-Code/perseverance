@@ -24,7 +24,7 @@ typedef struct {
     volatile float   distance;    // cm
     volatile uint8   ready;
     volatile uint8   edge_state;
-    volatile uint16  rising_time;
+    volatile uint16  rising_time; // Echo time
 } UltrasonicSensor;
 
 UltrasonicSensor sensor_front;
