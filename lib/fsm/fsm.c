@@ -1,6 +1,6 @@
 #include "fsm.h"
 
-FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState)
+FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState, float* distances)
 {
     switch (currentState)
     {
@@ -29,7 +29,7 @@ FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState)
             if (l == 1 && f == 1 && r == 0)
                 return STATE_RIGHT_CORNER;
 
-            if (l == 0 && f == 0 && r == 0)
+            if ((l == 0 && f == 0 && r == 0) && (distances[0] > 35 && distances[1] > 35 && distances[2] > 35))
                 return STATE_FINISH;
 
             return STATE_POSSIBLE_RIGHT_CORNER;
@@ -44,7 +44,7 @@ FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState)
             if (l == 0 && f == 1 && r == 1)
                 return STATE_LEFT_CORNER;
 
-            if (l == 0 && f == 0 && r == 0)
+            if ((l == 0 && f == 0 && r == 0) && (distances[0] > 35 && distances[1] > 35 && distances[2] > 35))
                 return STATE_FINISH;
 
             return STATE_POSSIBLE_LEFT_CORNER;
@@ -74,8 +74,17 @@ FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState)
             if (l == 1  && r == 1) //&& f == 0
                 return STATE_DEFAULT;
 
-            if (l == 1 && f == 1 && r == 0) // could be removed if confirmed not in the competition
-                return STATE_RIGHT_CORNER;                
+            // if (l == 1 && f == 0 && r == 0)
+            //     return STATE_POSSIBLE_RIGHT_CORNER;
+
+            if (l == 0 && f == 0 && r == 1)
+                return STATE_POSSIBLE_LEFT_CORNER;                
+
+            // if (l == 1 && f == 1 && r == 0) // could be removed if confirmed not in the competition
+            //     return STATE_RIGHT_CORNER;  
+                
+            // if (l == 1 && f == 1 && r == 0)
+            //     return STATE_RIGHT_CORNER;                
 
             return STATE_POST_RIGHT_CORNER;
 
@@ -86,8 +95,11 @@ FSM_State_t FSM_UpdateState(uint8 l, uint8 f, uint8 r, FSM_State_t currentState)
             if (l == 1  && r == 1) //&& f == 0
                 return STATE_DEFAULT;
 
-            if (l == 0 && f == 1 && r == 1)
-                return STATE_LEFT_CORNER;                
+            if (l == 1 && f == 0 && r == 0)
+                return STATE_POSSIBLE_RIGHT_CORNER;                
+
+            // if (l == 0 && f == 1 && r == 1)
+            //     return STATE_LEFT_CORNER;                
 
             return STATE_POST_LEFT_CORNER;
 
