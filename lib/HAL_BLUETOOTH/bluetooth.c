@@ -8,13 +8,13 @@ void Bluetooth_Init(uint32_t baudRate)
   uint16_t ubrr = (F_CPU / (16UL * baudRate)) - 1;
 
   // UART BAUD RATE REIGISTER
-  UBRR1H = (uint8_t)(ubrr >> 8);
-  UBRR1L = (uint8_t)(ubrr);
+  UBRR2H = (uint8_t)(ubrr >> 8);
+  UBRR2L = (uint8_t)(ubrr);
 
   // USART Control and Status Register 0 B
   // ENABLE TX1 and RX1
-  SET_BIT(UCSR1B, TXEN2);
-  SET_BIT(UCSR1B, RXEN2);
+  SET_BIT(UCSR2B, TXEN2);
+  SET_BIT(UCSR2B, RXEN2);
 
   // USART Control and Status Register 0 C
   // 8 bits data one stop bit
@@ -25,8 +25,8 @@ void Bluetooth_Init(uint32_t baudRate)
   // 0       1       1         8 bits ← most common
   // 1       1       1         9 bits
   // USBS1 = 0 meaning stop bit = 0
-  SET_BIT(UCSR1C, UCSZ10);
-  SET_BIT(UCSR1C, UCSZ11);
+  SET_BIT(UCSR2C, UCSZ20);
+  SET_BIT(UCSR2C, UCSZ21);
 
 }
 
@@ -43,16 +43,16 @@ void Bluetooth_Send(const char *message)
     // UDREn : USART Data Register Empty
     // This bit = 1 when The transmit buffer is ready to accept new data
     // UCSRnA & (1<<UDREn) This checks: Is UDRE bit = 1?
-     while (!GET_BIT(UCSR1A, UDRE1));
+     while (!GET_BIT(UCSR2A, UDRE2));
     
     // put data into buffer
-    UDR1 = *prefix++;
+    UDR2 = *prefix++;
     
   }
 
   while (*message)
   {
-    while (!GET_BIT(UCSR1A, UDRE1));
-    UDR1 = *message++;
+    while (!GET_BIT(UCSR2A, UDRE2));
+    UDR2 = *message++;
   }
 }
