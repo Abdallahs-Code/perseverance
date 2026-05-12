@@ -3,7 +3,6 @@
 
 #include "std_types.h"
 
-
 typedef enum
 {
     STATE_DEFAULT = 0,
