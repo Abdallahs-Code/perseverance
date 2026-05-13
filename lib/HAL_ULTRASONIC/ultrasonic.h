@@ -9,6 +9,14 @@
 extern "C" {
 #endif
 
+// +---------+------------------+------------------+
+// | Sensor  | TRIG → Mega pin  | ECHO → Mega pin  |
+// +---------+------------------+------------------+
+// | Front   | D2  (PE4)        | D19 (PD2, INT2)  |
+// | Left    | D3  (PE5)        | D49 (PL0, ICP4)  |
+// | Right   | D7  (PH4)        | D48 (PL1, ICP5)  |
+// +---------+------------------+------------------+
+
 #define ULTRASONIC_SENSOR_COUNT 3
 
 #define ULTRASONIC_NO_ECHO -1.0f
