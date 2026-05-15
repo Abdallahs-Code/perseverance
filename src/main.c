@@ -118,48 +118,21 @@ int main(void)
 
         while (currentState == STATE_RIGHT_CORNER)
         {
-
             if (rightTurnSaved == 0)
             {
                 turnSequence[turnCount] = 'R';
                 turnCount++;
-
                 rightTurnSaved = 1;
-            }  
+            }
 
-            Car_TurnRight();          
-
-            Ultrasonic_CheckSensors(distances, thresholds);
-            leftSensor  = thresholds[0];
-            frontSensor = thresholds[1];
-            rightSensor = thresholds[2];
-
-            currentState = FSM_UpdateState(
-                                leftSensor,
-                                frontSensor,
-                                rightSensor,
-                                currentState, 
-                                NULL
-                           );                       
-        }
-
-
-        /* ========= POST RIGHT CORNER ========= */
-
-        while (currentState == STATE_POST_RIGHT_CORNER)
-        {
-            if (distances[0] < LEFT_MIN_DISTANCE)
-            {
+            if (frontSensor == 1)
+                Car_TurnRight();
+            else if (distances[0] < LEFT_MIN_DISTANCE)
                 Car_LeftAlign();
-            }
-            else if (distances[1] < POST_CORNER_MIN_DISTANCE)
-            {
+            else if (distances[2] < RIGHT_MIN_DISTANCE)
                 Car_RightAlign();
-            }
             else
-            {
                 Car_MoveForward();
-            }
 
             Ultrasonic_CheckSensors(distances, thresholds);
             leftSensor  = thresholds[0];
@@ -170,9 +143,9 @@ int main(void)
                                 leftSensor,
                                 frontSensor,
                                 rightSensor,
-                                currentState, 
+                                currentState,
                                 NULL
-                           );                        
+                           );
         }
 
 
@@ -215,48 +188,21 @@ int main(void)
 
         while (currentState == STATE_LEFT_CORNER)
         {
-
             if (leftTurnSaved == 0)
             {
                 turnSequence[turnCount] = 'L';
                 turnCount++;
-
-                leftTurnSaved  = 1;
-            }         
-
-            Car_TurnLeft();
-
-            Ultrasonic_CheckSensors(distances, thresholds);
-            leftSensor  = thresholds[0];
-            frontSensor = thresholds[1];
-            rightSensor = thresholds[2];
-
-            currentState = FSM_UpdateState(
-                                leftSensor,
-                                frontSensor,
-                                rightSensor,
-                                currentState, 
-                                NULL
-                           );                       
-        }
-
-
-        /* ========= POST LEFT CORNER ========= */
-
-        while (currentState == STATE_POST_LEFT_CORNER)
-        {
-            if (distances[2] < RIGHT_MIN_DISTANCE)
-            {
-                Car_RightAlign();
+                leftTurnSaved = 1;
             }
-            else if (distances[1] < POST_CORNER_MIN_DISTANCE)
-            {
+
+            if (frontSensor == 1)
+                Car_TurnLeft();
+            else if (distances[0] < LEFT_MIN_DISTANCE)
                 Car_LeftAlign();
-            }
+            else if (distances[2] < RIGHT_MIN_DISTANCE)
+                Car_RightAlign();
             else
-            {
                 Car_MoveForward();
-            }
 
             Ultrasonic_CheckSensors(distances, thresholds);
             leftSensor  = thresholds[0];
@@ -267,9 +213,9 @@ int main(void)
                                 leftSensor,
                                 frontSensor,
                                 rightSensor,
-                                currentState, 
+                                currentState,
                                 NULL
-                           );                    
+                           );
         }
 
 

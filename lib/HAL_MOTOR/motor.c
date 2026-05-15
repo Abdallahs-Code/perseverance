@@ -83,7 +83,7 @@ Example:
 
 void Motor_SetLeftSpeed(uint8 duty)
 {
-    Timer1_SetDuty(TIMER1_CHANNEL_A, duty + 2);
+    Timer1_SetDuty(TIMER1_CHANNEL_A, duty);
 }
 
 void Motor_SetRightSpeed(uint8 duty)

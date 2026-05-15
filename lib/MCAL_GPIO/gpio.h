@@ -11,6 +11,7 @@
 #define PORT_F 5
 #define PORT_G 6
 #define PORT_H 7
+#define PORT_L 8
 
 #define GPIO_OUTPUT 1
 #define GPIO_INPUT  0

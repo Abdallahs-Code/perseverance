@@ -46,6 +46,11 @@ void GPIO_SetPinDirection(uint8 port, uint8 pin, uint8 direction)
             else CLEAR_BIT(DDRH, pin);
             break;
 
+        case PORT_L:
+            if (direction == GPIO_OUTPUT) SET_BIT(DDRL, pin);
+            else CLEAR_BIT(DDRL, pin);
+            break;
+
         default:
             break;
     }
@@ -95,6 +100,11 @@ void GPIO_WritePin(uint8 port, uint8 pin, uint8 value)
             else CLEAR_BIT(PORTH, pin);
             break;
 
+        case PORT_L:
+            if (value == GPIO_HIGH) SET_BIT(PORTL, pin);
+            else CLEAR_BIT(PORTL, pin);
+            break;
+
         default:
             break;        
     }
@@ -112,6 +122,7 @@ uint8 GPIO_ReadPin(uint8 port, uint8 pin)
         case PORT_F: return GET_BIT(PINF, pin);
         case PORT_G: return GET_BIT(PING, pin);
         case PORT_H: return GET_BIT(PINH, pin);
+        case PORT_L: return GET_BIT(PINL, pin);
     }
     return 0;
 }
